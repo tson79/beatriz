@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💌 Para minha Beatriz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(145deg, #fce4ec 0%, #f8e8e0 100%);
+      padding: 16px;
+    }
+
+    /* Container principal – vira card */
+    .container {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 245, 240, 0.5);
+      backdrop-filter: blur(2px);
+      border-radius: 48px 48px 32px 32px;
+      box-shadow: 0 20px 40px rgba(160, 80, 70, 0.2);
+      padding: 24px 20px 36px;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 220, 210, 0.4);
+    }
+
+    /* =========== PÁGINA 1: ENVELOPE =========== */
+    .page-envelope {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1.4 / 1;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      margin: 0 auto;
+    }
+
+    .envelope-wrapper:hover {
+      transform: scale(1.01);
+    }
+
+    .envelope-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 12px 18px rgba(120, 60, 50, 0.25));
+    }
+
+    /* selo/lacre – clique aqui */
+    .seal-hit {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 22%;
+      height: 20%;
+      background: transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.15s;
+      border: 2px dashed rgba(200, 100, 80, 0);
+    }
+
+    .seal-hit:hover {
+      border: 2px dashed rgba(200, 100, 80, 0.5);
+      background: rgba(255, 200, 180, 0.15);
+      border-radius: 50%;
+    }
+
+    .seal-hit:active {
+      background: rgba(200, 100, 80, 0.25);
+      transform: translate(-50%, -50%) scale(0.92);
+    }
+
+    .instrucao {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: #5d3a2e;
+      background: rgba(255, 235, 225, 0.7);
+      padding: 12px 28px;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 10px rgba(140, 70, 50, 0.08);
+      border: 1px solid #f0d4c8;
+      font-weight: 300;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .instrucao small {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      display: block;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* =========== PÁGINA 2: CARTA =========== */
+    .page-letter {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.9s ease;
+    }
+
+    .page-letter.active {
+      display: flex;
+    }
+
+    .carta-papel {
+      background: #fefaf5;
+      background-image: 
+        linear-gradient(#f0e4dc 1px, transparent 1px),
+        linear-gradient(90deg, #f0e4dc 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: -1px -1px;
+      padding: 32px 28px;
+      border-radius: 24px 24px 20px 20px;
+      box-shadow: 
+        0 8px 0 #dac2b4,
+        0 20px 30px -10px rgba(100, 50, 40, 0.3);
+      border: 1px solid #ecd7cc;
+      width: 100%;
+      max-width: 560px;
+      margin-bottom: 18px;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .carta-papel::before {
+      content: '✧';
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      font-size: 1.8rem;
+      color: #dbb8aa;
+      opacity: 0.4;
+      transform: rotate(10deg);
+    }
+
+    .carta-papel::after {
+      content: '✧';
+      position: absolute;
+      bottom: 12px;
+      left: 20px;
+      font-size: 1.8rem;
+      color: #dbb8aa;
+      opacity: 0.3;
+      transform: rotate(-5deg);
+    }
+
+    .texto-carta {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #3d2a1e;
+      line-height: 1.7;
+      font-size: 1rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .texto-carta p {
+      margin-bottom: 0.8rem;
+    }
+
+    .assinatura {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #7b4f3a;
+      border-top: 1px dashed #dcc4b8;
+      padding-top: 18px;
+      letter-spacing: 1px;
+    }
+
+    .musica-credit {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #9b7a6b;
+      background: rgba(235, 215, 205, 0.4);
+      padding: 6px 18px;
+      border-radius: 30px;
+      backdrop-filter: blur(2px);
+      display: inline-block;
+      border: 1px solid #ecd3c6;
+    }
+
+    .btn-voltar {
+      background: transparent;
+      border: 1px solid #dac2b4;
+      color: #5d3a2e;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+      background: rgba(255, 245, 235, 0.5);
+      backdrop-filter: blur(2px);
+    }
+
+    .btn-voltar:hover {
+      background: #e8d3c8;
+      border-color: #b28b7a;
+      color: #2f1f16;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: #b2907e;
+      opacity: 0.7;
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px 12px;
+        border-radius: 32px;
+      }
+      .carta-papel {
+        padding: 24px 18px;
+      }
+      .texto-carta {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .instrucao {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="appContainer">
+
+  <!-- ===== PÁGINA 1: ENVELOPE ===== -->
+  <div id="pageEnvelope" class="page-envelope">
+    <div class="envelope-wrapper" id="envelopeWrapper">
+      <svg class="envelope-svg" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="envGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f7e3d6" />
+            <stop offset="100%" stop-color="#edd5c4" />
+          </linearGradient>
+          <linearGradient id="shadowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#b28874" stop-opacity="0.15" />
+            <stop offset="100%" stop-color="#7a5b49" stop-opacity="0.25" />
+          </linearGradient>
+          <filter id="softShadow" x="-4%" y="-4%" width="108%" height="108%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#6b4c3b" flood-opacity="0.18"/>
+          </filter>
+        </defs>
+
+        <rect x="12" y="12" width="376" height="252" rx="18" fill="url(#envGrad)" stroke="#c9ad9a" stroke-width="1.8" filter="url(#softShadow)" />
+        
+        <path d="M 12 60 L 200 170 L 388 60" stroke="#dbbcae" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6" />
+        <path d="M 12 60 L 200 170 L 388 60" stroke="#faf0e9" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.3" transform="translate(0, 2)" />
+
+        <path d="M 12 220 Q 200 270 388 220 L 388 252 Q 200 280 12 252 Z" fill="#e9d0c0" stroke="#c9ad9a" stroke-width="1.2" opacity="0.9" />
+        
+        <circle cx="200" cy="140" r="38" fill="#b54a3a" stroke="#8f3d2e" stroke-width="2.5" opacity="0.95" />
+        <circle cx="200" cy="140" r="32" fill="#cf6b58" stroke="#b54a3a" stroke-width="1.8" />
+        <circle cx="200" cy="140" r="26" fill="#e0826d" opacity="0.6" />
+        <path d="M 186 132 C 186 124, 198 120, 200 128 C 202 120, 214 124, 214 132 C 214 142, 200 154, 200 154 C 200 154, 186 142, 186 132 Z" fill="#fceed8" stroke="#c94f3a" stroke-width="1.2" opacity="0.95" />
+        
+        <text x="200" y="216" font-family="'Georgia', serif" font-size="18" fill="#6b4c3b" text-anchor="middle" font-weight="500" letter-spacing="2.5" opacity="0.85" style="text-shadow: 0 1px 2px rgba(255,215,200,0.3);">💌 abra com cuidado</text>
+        
+        <circle cx="200" cy="232" r="4" fill="#b28874" opacity="0.25" />
+        <circle cx="190" cy="232" r="2.5" fill="#b28874" opacity="0.15" />
+        <circle cx="210" cy="232" r="2.5" fill="#b28874" opacity="0.15" />
+      </svg>
+
+      <div class="seal-hit" id="sealHit" title="Clique no lacre para abrir"></div>
+    </div>
+
+    <div class="instrucao">
+      ✦ toque no lacre vermelho ✦
+      <small>clique no centro do envelope</small>
+    </div>
+  </div>
+
+  <!-- ===== PÁGINA 2: CARTA ===== -->
+  <div id="pageLetter" class="page-letter">
+    <div class="carta-papel">
+      <div class="texto-carta">
+        <p>Beatriz, minha musa, minha outra metade...</p>
+        <p>Ah, meu bem... Meus dias são mais felizes com você. Te amar é um privilégio que eu jamais vou cansar de ter. Eu amo passar os dias pensando em você, na gente... Eu imagino cada detalhezinho bobo com você, mas só com você... Eu imagino a gente cozinhando juntos, mesmo que eu vá te atrapalhar. Eu imagino a gente de mãos dadas na rua, mesmo que um de nós tropece e caia e o outro comece a rir. Eu imagino você lendo seus livros bobos enquanto faço palhaçadas pra tirar sua concentração. Eu imagino a gente dançando na chuva e depois ficando gripados no dia seguinte. Enfim, eu amo imaginar cada situação boba com você, meu bem... Você é minha alma gêmea, minha bobinha, minha musa, minha paixão... Você é a primeira coisa que penso quando acordo e a última que penso quando vou dormir, você aparece nos meus sonhos e então durmo bem. Eu poderia facilmente passar o dia todo admirando cada detalhe do seu rosto, e um dia vou fazer isso. Um dia vamos formar uma família e vamos viver na nossa casinha barulhenta e cheia de amor. Ah, Beatriz... Me permite viver minha vida toda te amando, por favor. Eu te amo demais e nunca vou me cansar disso.</p>
+        <div class="assinatura">~Lucas</div>
+      </div>
+    </div>
+
+    <!-- ===== MÚSICA DE FUNDO ===== -->
+    <!-- Caminho: cutecute/musga/youaretherightone.mp3 -->
+    <audio id="bgMusic" loop preload="auto">
+      <source src="musga/youaretherightone.mp3" type="audio/mpeg">
+      Seu navegador não suporta áudio, mas a carta continua 💕
+    </audio>
+
+    <div class="musica-credit">
+      🎵  "You Are The Right One"  •  ♡
+    </div>
+
+    <button class="btn-voltar" id="btnVoltar">← voltar ao envelope</button>
+  </div>
+
+  <div class="footer-note">Com todo amor, Lucas</div>
+</div>
+
+<script>
+  (function() {
+    const pageEnvelope = document.getElementById('pageEnvelope');
+    const pageLetter = document.getElementById('pageLetter');
+    const sealHit = document.getElementById('sealHit');
+    const btnVoltar = document.getElementById('btnVoltar');
+    const bgMusic = document.getElementById('bgMusic');
+
+    function abrirCarta() {
+      pageEnvelope.style.display = 'none';
+      pageLetter.classList.add('active');
+      pageLetter.style.display = 'flex';
+
+      if (bgMusic) {
+        bgMusic.play().catch(e => {
+          console.log('Autoplay bloqueado, aguardando interação.');
+        });
+      }
+    }
+
+    sealHit.addEventListener('click', function(e) {
+      e.stopPropagation();
+      abrirCarta();
+    });
+
+    document.getElementById('envelopeWrapper').addEventListener('click', function(e) {
+      if (e.target.closest('.seal-hit')) return;
+      abrirCarta();
+    });
+
+    btnVoltar.addEventListener('click', function() {
+      pageLetter.classList.remove('active');
+      pageLetter.style.display = 'none';
+      pageEnvelope.style.display = 'flex';
+    });
+
+    document.addEventListener('click', function() {
+      if (pageLetter.classList.contains('active') && bgMusic && bgMusic.paused) {
+        bgMusic.play().catch(e => {});
+      }
+    }, { once: false });
+
+    pageLetter.addEventListener('click', function() {
+      if (bgMusic && bgMusic.paused) {
+        bgMusic.play().catch(e => {});
+      }
+    });
+
+    pageEnvelope.style.display = 'flex';
+    pageLetter.style.display = 'none';
+    pageLetter.classList.remove('active');
+  })();
+</script>
+</body>
+</html>
